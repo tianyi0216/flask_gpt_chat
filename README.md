@@ -1,7 +1,7 @@
 # flask_gpt_chat
-This flask app allows you to chat with a gpt model. You can specify which ever model you prefer by changing the model id. It is set to gpt-4 for now.
+This flask app allows you to chat with a gpt model. You may also save your chat history. You can specify whichever model you prefer by changing the model id. It is set to gpt-4 for now.
 
-I made this thinking of a way that you might not need to purchase for the 20 dollar subscription for chatgpt + since some time I might not need to use gpt 4 as much. So openai's api saves quite a bit. Though I think it is not as convinient as chatgpt. 
+I made this thinking of a way that you might not need to purchase the 20 dollar subscription for chatgpt + since sometimes I might not need to use gpt 4 as much. So openai's api saves quite a bit. Though I think it is not as convenient as chatgpt. 
 
 ## How to use
 1. Clone the repo
