@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <title>GPT4</title>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+      body {
+        font-family: monospace;
+      }
+      h1 {
+        background-color: #8080ff;
+        color: black;
+        display: inline-block;
+        font-size: 2em;
+        margin: 0;
+        padding: 10px;
+      }
+      #chatbox {
+        margin-left: auto;
+        margin-right: auto;
+        width: 40%;
+        margin-top: 60px;
+      }
+      #userInput {
+        margin-left: auto;
+        margin-right: auto;
+        width: 40%;
+        margin-top: 60px;
+      }
+      #textInput {
+        width: 90%;
+        border: none;
+        border-bottom: 3px solid black;
+        font-family: monospace;
+        font-size: 17px;
+      }
+      .userText {
+        color: black;
+        font-family: monospace;
+        font-size: 17px;
+        text-align: right;
+        line-height: 30px;
+      }
+      .userText span {
+        background-color: #e699ff;
+        padding: 10px;
+        border-radius: 2px;
+      }
+      .botText {
+        color: black;
+        font-family: monospace;
+        font-size: 17px;
+        text-align: left;
+        line-height: 30px;
+      }
+      .botText span {
+        background-color: #ffdd99;
+        padding: 10px;
+        border-radius: 2px;
+      }
+      #tidbit {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 300px;
+      }
+      .boxed {
+        margin-left: auto;
+        margin-right: auto;
+        width: 78%;
+        margin-top: 60px;
+        border: 1px solid green;
+      }
+      .box {
+        border: 2px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <center>
+      <h1>
+        GPT
+      </h1>
+      <img src="https://www.nuanque.com/wp-content/uploads/2018/05/0169465abd8eb4a8012062e3b57a67.gif" width = "100px" height = "150px"></img>
+    </center>
+    <div class="box"></div>
+    <div class="boxed">
+        <div><img src="https://www.nuanque.com/wp-content/uploads/2021/12/0194f361a995be11013e8cd02baa3e.gif" alt="Computer man" style="width:150px;height:200px;"></div>
+      <div>
+        <div id="chatbox">
+          <p class="botText">
+            <span>Hi, you need to v me 50 to start the conversation</span>
+          </p>
+        </div>
+        <div id="userInput">
+          <input id="textInput" type="text" name="msg" placeholder="Enter message here..." >
+          <button id="send-button">V 50</button>
+            <button id = "save-button">Save chat</button>
+        </div>
+        
+      </div>
+      <script>
+        function getBotResponse() {
+          var rawText = $("#textInput").val();
+          var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
+          $("#textInput").val("");
+          $("#chatbox").append(userHtml);
+          document
+            .getElementById("userInput")
+            .scrollIntoView({ block: "start", behavior: "smooth" });
+          $.get("/get", { msg: rawText }).done(function(data) {
+            var botHtml = '<p class="botText"><span>' + data + "</span></p>";
+            $("#chatbox").append(botHtml);
+            document
+              .getElementById("userInput")
+              .scrollIntoView({ block: "start", behavior: "smooth" });
+          });
+        }
+        $("#send-button").click(function(e) {
+        //$("#textInput").keypress(function(e) {
+          //if (e.which == 13) {
+           getBotResponse();
+          //}
+        });
+          
+          // This will be your 'save chat' button
+        $("#save-button").click(function(e) {
+        fetch('/save', {
+            method: 'POST'
+        }).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+            if(data.status === "success") {
+                alert('Chat history saved successfully');
+            }
+        }).catch(function(error) {
+            console.log(error);
+        });
+    });
+      </script>
+    </div>
+    <!--
+    <div>
+      <h3>Unlock more</h3>
+      <video src = "https://pages.cs.wisc.edu/~tianyi/video_20190221_211116.mp4" controls width = "300px" height = "500px">Cannot be loaded</video> 
+      <img src="https://pages.cs.wisc.edu/~tianyi/IMG_20190130_200742.jpg" width = "300px" height = "400px"></img>
+    </div>
+    -->
+  </body>
+</html>
